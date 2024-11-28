@@ -45,7 +45,7 @@ function buildWasm() {
     fs.writeFileSync(
         path.join( __dirname, "..", "build", "groth16_wasm.js"),
         `
-            exports.code = new Buffer("${Buffer.from(code).toString("base64")}", "base64");
+            exports.code = Uint8Array.from(atob('${Buffer.from(code).toString("base64")}'), (v) => v.charCodeAt(0));
             exports.pq = ${moduleBuilder.modules.f1m.pq};
             exports.pr = ${moduleBuilder.modules.frm.pq};
         `

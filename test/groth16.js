@@ -1,5 +1,6 @@
 
 const assert = require("assert");
+const { describe, it, beforeEach, afterEach } = require("node:test")
 const fs = require("fs");
 const path = require("path");
 const snarkjs = require("snarkjs");
@@ -7,9 +8,11 @@ const snarkjs = require("snarkjs");
 const buildGroth16 = require("../index.js").buildGroth16;
 
 describe("Basic tests for groth16 proof generator", () => {
-    it("should do basic multiexponentiation", async () => {
-        const groth16 = await buildGroth16();
+    let groth16
+    beforeEach(async () => groth16 = await buildGroth16())
+    afterEach(async () => groth16.terminate())
 
+    it("should do basic multiexponentiation", async () => {
         const signalsAll = fs.readFileSync(path.join(__dirname, "data", "witness.bin"));
         const provingKey = fs.readFileSync(path.join(__dirname, "data", "proving_key.bin"));
 
@@ -44,14 +47,9 @@ describe("Basic tests for groth16 proof generator", () => {
 
         assert.equal(r1[0],r2[0]);
         assert.equal(r1[1],r2[1]);
-
-        groth16.terminate();
-
     });
 
-    it("It should do a basic point doubling G1", async () => {
-        const groth16 = await buildGroth16();
-
+    it("It should do a basic point doubling G1", { timeout: 10000000 }, async () => {
         const signals = fs.readFileSync(path.join(__dirname, "data", "witness.bin"));
         const provingKey = fs.readFileSync(path.join(__dirname, "data", "proving_key.bin"));
         const proofS = await groth16.proof(signals.buffer, provingKey.buffer);
@@ -61,8 +59,6 @@ describe("Basic tests for groth16 proof generator", () => {
         const pub = snarkjs.unstringifyBigInts(JSON.parse(fs.readFileSync(path.join(__dirname, "data", "public.json"), "utf8")));
 
         assert(snarkjs.groth.isValid(verifierKey, proof, pub));
-
-        groth16.terminate();
-    }).timeout(10000000);
+    });
 
 });
