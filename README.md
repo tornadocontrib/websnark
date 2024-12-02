@@ -1,3 +1,18 @@
+# Fork
+
+This is a fork of the version of websnark that is used in the Tornado Classic UI.  The changes here only seek to remove as many dependencies as possible, and make the project bundlable with a simple bundler like `esbuild`.  A Dockerfile is included to facilitate deterministic builds of the generated `bundle.mjs` file.  You can generate and extract the bundle file by doing:
+```
+docker image build --tag temp_image .
+docker container create --name temp_container temp_image
+docker container cp temp_container:/workspace/build/bundle.mjs bundle.mjs
+docker container rm temp_container
+docker image rm temp_image
+```
+
+The full set of changes between what Tornado Classic UI usse and this can be seen at https://github.com/tornadocash/websnark/compare/4c0af6a8b65aabea3c09f377f63c44e7a58afa6d...MicahZoltu:websnark:master, and details about each change can be seen in the commit messages.
+
+Everything below in this Readme is from the original repository.
+
 # websnark
 
 A fast zkSnark proof generator written in native Web Assembly.

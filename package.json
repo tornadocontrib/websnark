@@ -2,7 +2,10 @@
   "name": "websnark",
   "version": "0.0.4",
   "description": "big integer library to work in Zq",
-  "main": "index.js",
+  "main": "build/bundle.mjs",
+  "exports": {
+    "import": "./build/bundle.mjs"
+  },
   "scripts": {
     "test": "node --test",
     "build": "node tools/buildwasm.js"
@@ -24,14 +27,17 @@
     "url": "https://github.com/iden3/websnark.git"
   },
   "devDependencies": {
+    "big-integer": "1.6.52",
     "snarkjs": "git+https://github.com/MicahZoltu/snarkjs.git#2c964b3fe6019e057acab04cc17705d1f7fdaf9a",
     "wasmbuilder": "0.0.3",
-    "minimist": "1.2.8"
-  },
-  "dependencies": {
-    "big-integer": "1.6.52"
+    "minimist": "1.2.8",
+    "esbuild": "0.24.1"
   },
   "overrides": {
     "big-integer": "1.6.52"
+  },
+  "browser": {
+    "crypto": false,
+    "worker_threads": false
   }
 }
