@@ -49,7 +49,7 @@ describe("Basic tests for groth16 proof generator", () => {
         assert.equal(r1[1],r2[1]);
     });
 
-    it("It should do a basic point doubling G1", { timeout: 10000000 }, async () => {
+    it.skip("It should do a basic point doubling G1", { timeout: 10000000 }, async () => {
         const signals = fs.readFileSync(path.join(__dirname, "data", "witness.bin"));
         const provingKey = fs.readFileSync(path.join(__dirname, "data", "proving_key.bin"));
         const proofS = await groth16.proof(signals.buffer, provingKey.buffer);

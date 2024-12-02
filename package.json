@@ -26,12 +26,17 @@
   "devDependencies": {
     "snarkjs": "git+https://github.com/MicahZoltu/snarkjs.git#2c964b3fe6019e057acab04cc17705d1f7fdaf9a",
     "wasmbuilder": "0.0.3",
-    "minimist": "1.2.8"
+    "minimist": "1.2.8",
+    "esbuild": "0.24.0"
   },
   "dependencies": {
     "big-integer": "1.6.52"
   },
   "overrides": {
     "big-integer": "1.6.52"
+  },
+  "browser": {
+    "crypto": false,
+    "worker_threads": false
   }
 }
